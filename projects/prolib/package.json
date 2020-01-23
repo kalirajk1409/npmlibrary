@@ -1,8 +1,11 @@
 {
-  "name": "prolib",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3"
-  }
+    "name": "prolib",
+    "version": "0.2.0",
+    "peerDependencies": {
+        "@angular/common": "^8.0.3",
+        "@angular/core": "^8.0.3"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    }
 }
