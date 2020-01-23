@@ -2,5 +2,154 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "prolib": {
+      "projectType": "library",
+      "root": "projects/prolib",
+      "sourceRoot": "projects/prolib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/prolib/tsconfig.lib.json",
+            "project": "projects/prolib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/prolib/src/test.ts",
+            "tsConfig": "projects/prolib/tsconfig.spec.json",
+            "karmaConfig": "projects/prolib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/prolib/tsconfig.lib.json",
+              "projects/prolib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "prouitest": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/prouitest",
+      "sourceRoot": "projects/prouitest/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/prouitest",
+            "index": "projects/prouitest/src/index.html",
+            "main": "projects/prouitest/src/main.ts",
+            "polyfills": "projects/prouitest/src/polyfills.ts",
+            "tsConfig": "projects/prouitest/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/prouitest/src/favicon.ico",
+              "projects/prouitest/src/assets"
+            ],
+            "styles": [
+              "projects/prouitest/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/prouitest/src/environments/environment.ts",
+                  "with": "projects/prouitest/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "prouitest:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "prouitest:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "prouitest:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/prouitest/src/test.ts",
+            "polyfills": "projects/prouitest/src/polyfills.ts",
+            "tsConfig": "projects/prouitest/tsconfig.spec.json",
+            "karmaConfig": "projects/prouitest/karma.conf.js",
+            "assets": [
+              "projects/prouitest/src/favicon.ico",
+              "projects/prouitest/src/assets"
+            ],
+            "styles": [
+              "projects/prouitest/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/prouitest/tsconfig.app.json",
+              "projects/prouitest/tsconfig.spec.json",
+              "projects/prouitest/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/prouitest/e2e/protractor.conf.js",
+            "devServerTarget": "prouitest:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "prouitest:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "prolib"
 }
